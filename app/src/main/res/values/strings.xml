@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">uwCapstone</string>
+    <string name="start_sending">Start Sending...</string>
+    <string name="stop_sending">STOP SENDING...</string>
+    <string name="start_receiving">START RECEIVING...</string>
+    <string name="stop_receiving">STOP RECEIVING...</string>
+    <string-array name="messages">
+        <item>SOS</item>
+        <item>Received</item>
+    </string-array>
+</resources>
