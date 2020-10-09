@@ -25,6 +25,7 @@ import com.sonicmeter.android.multisonicmeter.Params;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
+
     private static MainActivity instance;
     private Spinner mySpinner = null;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
@@ -33,6 +34,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     Receiver receiverThread = null;
     Params params = new Params();
 
+    Button mStartSendBtn;
+    Button mStopSendBtn;
+    Button mStartReceiveBtn;
+    Button mStopReceiveBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +46,16 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         setContentView(R.layout.activity_main);
         instance = this;
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            checkAndRequestPermissions();
-        }
+        checkAndRequestPermissions();
 
         // initial UI state
-        Button startSendBtn = (Button) findViewById(R.id.seeker);
+        mStartSendBtn = (Button) findViewById(R.id.seeker);
         setSeekerBtnState(true);
-        Button stopSendBtn = (Button) findViewById(R.id.stopSeek);
+        mStopSendBtn = (Button) findViewById(R.id.stopSeek);
         setStopSeekBtnState(false);
-        Button startReceiveBtn = (Button) findViewById(R.id.helper);
+        mStartReceiveBtn = (Button) findViewById(R.id.helper);
         setHelperBtnState(true);
-        Button stopReceiveBtn = (Button) findViewById(R.id.stopHelp);
+        mStopReceiveBtn = (Button) findViewById(R.id.stopHelp);
         setStopHelpBtnState(false);
         mySpinner = (Spinner) findViewById(R.id.msgToSend);
 
@@ -77,19 +81,27 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         // register OnItemSelected event
         mySpinner.setOnItemSelectedListener(this);
 
-        startSendBtn.setOnClickListener(new View.OnClickListener() {
+        mStartSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to play sequence
                 log("start sender thread as seeker");
+                mStartSendBtn.setEnabled(false);
+                mStopSendBtn.setEnabled(true);
+                mStartReceiveBtn.setEnabled(false);
+                mStopReceiveBtn.setEnabled(false);
                 instance.clientThread = new Sender("Seeker");
                 instance.clientThread.start();
             }
         });
 
-        stopSendBtn.setOnClickListener(new View.OnClickListener() {
+        mStopSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop playing sequence
                 log("stop seeker thread");
+                mStartSendBtn.setEnabled(true);
+                mStopSendBtn.setEnabled(false);
+                mStartReceiveBtn.setEnabled(true);
+                mStopReceiveBtn.setEnabled(false);
                 instance.clientThread.stopThread();
                 setStopSeekBtnState(false);
                 setSeekerBtnState(true);
@@ -97,19 +109,27 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             }
         });
 
-        startReceiveBtn.setOnClickListener(new View.OnClickListener() {
+        mStartReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to listen to sequence
                 log("start receiver thread as helper");
+                mStartSendBtn.setEnabled(false);
+                mStopSendBtn.setEnabled(false);
+                mStartReceiveBtn.setEnabled(false);
+                mStopReceiveBtn.setEnabled(true);
                 instance.receiverThread = new Receiver("Helper");
                 instance.receiverThread.start();
             }
         });
 
-        stopReceiveBtn.setOnClickListener(new View.OnClickListener() {
+        mStopReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop listening to sequence
                 Log.d("stop", "helper thread");
+                mStartSendBtn.setEnabled(true);
+                mStopSendBtn.setEnabled(false);
+                mStartReceiveBtn.setEnabled(true);
+                mStopReceiveBtn.setEnabled(false);
                 instance.receiverThread.stopThread();
                 setStopHelpBtnState(false);
                 setHelperBtnState(true);
