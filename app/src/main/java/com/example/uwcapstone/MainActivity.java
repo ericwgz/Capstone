@@ -50,13 +50,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         // initial UI state
         mStartSendBtn = (Button) findViewById(R.id.seeker);
-        setSeekerBtnState(true);
         mStopSendBtn = (Button) findViewById(R.id.stopSeek);
-        setStopSeekBtnState(false);
         mStartReceiveBtn = (Button) findViewById(R.id.helper);
-        setHelperBtnState(true);
         mStopReceiveBtn = (Button) findViewById(R.id.stopHelp);
-        setStopHelpBtnState(false);
+
         mySpinner = (Spinner) findViewById(R.id.msgToSend);
 
         // create a container to hold the values that would integrate to the spinner
@@ -103,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
                 instance.clientThread.stopThread();
-                setStopSeekBtnState(false);
-                setSeekerBtnState(true);
                 clientThread = null;
             }
         });
@@ -131,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
                 instance.receiverThread.stopThread();
-                setStopHelpBtnState(false);
-                setHelperBtnState(true);
                 receiverThread = null;
             }
         });
@@ -148,49 +141,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     public void onNothingSelected(AdapterView<?> arg0) {
         msg = "MESSAGE IS NOT SELECTED";
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    public static void setSeekerBtnState(final boolean state)
-    {
-        instance.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button button_server = (Button) instance.findViewById(R.id.seeker);
-                button_server.setEnabled(state);
-            }
-        });
-    }
-    public static void setStopSeekBtnState(final boolean state)
-    {
-        instance.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button button_client = (Button) instance.findViewById(R.id.stopSeek);
-                button_client.setEnabled(state);
-            }
-        });
-    }
-
-    public static void setHelperBtnState(final boolean state)
-    {
-        instance.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button button = (Button) instance.findViewById(R.id.helper);
-                button.setEnabled(state);
-            }
-        });
-    }
-
-    public static void setStopHelpBtnState(final boolean state)
-    {
-        instance.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button button = (Button) instance.findViewById(R.id.stopHelp);
-                button.setEnabled(state);
-            }
-        });
     }
 
     public static void log(final String text)

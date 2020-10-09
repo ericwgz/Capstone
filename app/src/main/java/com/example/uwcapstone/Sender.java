@@ -34,8 +34,6 @@ class Sender extends Thread{
             // keep sending SOS
             try {
                 MainActivity.log("seeker is sending message: SOS");
-                MainActivity.setSeekerBtnState(false);
-                MainActivity.setStopSeekBtnState(true);
                 playSequence = Utils.convertShortsToBytes( Utils.generateActuateSequence_seed(params.warmSequenceLength, params.signalSequenceLength, params.sampleRate, map.get("SOS"), params.noneSignalLength));
 
                 while(!exit) {

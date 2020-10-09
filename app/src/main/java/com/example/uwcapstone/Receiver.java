@@ -46,8 +46,6 @@ class Receiver extends Thread{
         if (role.equals("Helper")) {
             // check if received SOS
             Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-            MainActivity.setHelperBtnState(false);
-            MainActivity.setStopHelpBtnState(true);
             List<short[]> signalList = new ArrayList<>();
             List<String> msgList = new ArrayList<>();
 
