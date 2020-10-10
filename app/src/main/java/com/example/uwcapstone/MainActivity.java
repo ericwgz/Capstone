@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
 
-                if(mReceiverThread != null)
+                if(mClientThread != null)
                     mClientThread.stopThread();
                 if(mReceiverThread != null)
                     mReceiverThread.stopThread();

@@ -38,12 +38,12 @@ class Receiver extends Thread{
 
         Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 
-        double threshold = 20;
 
 
         //Start recording check if received SOS
         MainActivity.log(String.format("Searching %s.", mRole.equals(HELPER) ? SOS : ACK));
 
+        double threshold = 20;
         while(!mExit) {
             if(isReceived(mRole, threshold)) {
                 break;
