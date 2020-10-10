@@ -3,9 +3,6 @@ package com.example.uwcapstone;
 import com.sonicmeter.android.multisonicmeter.Params;
 import com.sonicmeter.android.multisonicmeter.Utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 class Sender extends Thread{
 
     public static final String HELPER = "Helper";

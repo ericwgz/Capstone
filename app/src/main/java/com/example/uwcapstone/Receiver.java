@@ -1,12 +1,5 @@
 package com.example.uwcapstone;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.sonicmeter.android.multisonicmeter.TrackRecord;
 import com.sonicmeter.android.multisonicmeter.Utils;
 import com.sonicmeter.android.multisonicmeter.Params;
