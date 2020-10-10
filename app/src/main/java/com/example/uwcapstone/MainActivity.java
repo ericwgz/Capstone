@@ -6,10 +6,8 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -27,12 +25,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     private static MainActivity instance;
-    private Spinner mySpinner = null;
+    private Spinner mSpinner;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     String msg = "";
-    Sender clientThread = null;
-    Receiver receiverThread = null;
-    Params params = new Params();
+
+    Sender mClientThread;
+    Receiver mReceiverThread;
 
     Button mStartSendBtn;
     Button mStopSendBtn;
@@ -49,84 +47,82 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         checkAndRequestPermissions();
 
         // initial UI state
-        mStartSendBtn = (Button) findViewById(R.id.seeker);
-        mStopSendBtn = (Button) findViewById(R.id.stopSeek);
-        mStartReceiveBtn = (Button) findViewById(R.id.helper);
-        mStopReceiveBtn = (Button) findViewById(R.id.stopHelp);
+        mStartSendBtn = findViewById(R.id.seeker);
+        mStopSendBtn = findViewById(R.id.stopSeek);
+        mStartReceiveBtn = findViewById(R.id.helper);
+        mStopReceiveBtn = findViewById(R.id.stopHelp);
 
-        mySpinner = (Spinner) findViewById(R.id.msgToSend);
+        mSpinner = findViewById(R.id.msgToSend);
 
         // create a container to hold the values that would integrate to the spinner
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.messages));
 
         // specify the adapter would have a drop down list
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // list in adapter shown in spinner
-        mySpinner.setAdapter(myAdapter);
+        mSpinner.setAdapter(myAdapter);
 
         // initial database
 
 
         // initial audiotrack player
-        Utils.initPlayer(params.sampleRate, 0);
-        Utils.initRecorder(params.sampleRate);
+        Utils.initPlayer(Params.sampleRate, 0);
+        Utils.initRecorder(Params.sampleRate);
 
-        Utils.initConvolution((int)(params.signalSequenceLength * params.bitCount));
+        Utils.initConvolution((Params.signalSequenceLength * Params.bitCount));
 
         // register OnItemSelected event
-        mySpinner.setOnItemSelectedListener(this);
+        mSpinner.setOnItemSelectedListener(this);
 
         mStartSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to play sequence
-                log("start sender thread as seeker");
+                log("Current Role : Seeker.");
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(true);
                 mStartReceiveBtn.setEnabled(false);
                 mStopReceiveBtn.setEnabled(false);
-                instance.clientThread = new Sender("Seeker");
-                instance.clientThread.start();
+                mClientThread = new Sender("Seeker");
+                mClientThread.start();
             }
         });
 
         mStopSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop playing sequence
-                log("stop seeker thread");
+                log("Stop seeking help.");
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
-                instance.clientThread.stopThread();
-                clientThread = null;
+                mClientThread.stopThread();
             }
         });
 
         mStartReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to listen to sequence
-                log("start receiver thread as helper");
+                log("Current Role : Helper.");
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(false);
                 mStopReceiveBtn.setEnabled(true);
-                instance.receiverThread = new Receiver("Helper");
-                instance.receiverThread.start();
+                mReceiverThread = new Receiver("Helper");
+                mReceiverThread.start();
             }
         });
 
         mStopReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop listening to sequence
-                Log.d("stop", "helper thread");
+                log("Stop help.");
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
-                instance.receiverThread.stopThread();
-                receiverThread = null;
+                mReceiverThread.stopThread();
             }
         });
     }
@@ -148,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView logBox = (TextView)instance.findViewById(R.id.textview_log);
+                TextView logBox = instance.findViewById(R.id.textview_log);
                 logBox.setMovementMethod(ScrollingMovementMethod.getInstance());
                 //Calendar cal = Calendar.getInstance();
                 logBox.append("  "+ text + "\n");//cal.get(Calendar.MINUTE)+ ":" +cal.get(Calendar.SECOND)+ ":" + cal.get(Calendar.MILLISECOND) +
@@ -161,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView decodedMsgBox = (TextView)instance.findViewById(R.id.decoded_msg);
+                TextView decodedMsgBox = instance.findViewById(R.id.decoded_msg);
                 decodedMsgBox.setMovementMethod(ScrollingMovementMethod.getInstance());
                 //Calendar cal = Calendar.getInstance();
                 decodedMsgBox.append("  "+ text + "\n");//cal.get(Calendar.MINUTE)+ ":" +cal.get(Calendar.SECOND)+ ":" + cal.get(Calendar.MILLISECOND) +
@@ -169,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         });
     }
 
-    private  boolean checkAndRequestPermissions() {
+    private void checkAndRequestPermissions() {
         int permissionWifi = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE);
         int writepermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionRecordAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
@@ -188,9 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
         }
-        return true;
     }
 
 }
