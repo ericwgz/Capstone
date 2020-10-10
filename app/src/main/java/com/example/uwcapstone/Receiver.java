@@ -13,6 +13,10 @@ import com.sonicmeter.android.multisonicmeter.Params;
 
 class Receiver extends Thread{
 
+    public static final String HELPER = "Helper";
+    public static final String SEEKER = "Seeker";
+    public static final String ACK = "ACK";
+    public static final String SOS = "SOS";
     public static final String TAG = Receiver.class.getSimpleName();
     private final String mRole;
     private boolean mExit;
@@ -27,7 +31,7 @@ class Receiver extends Thread{
 
     @Override
     public void run() {
-        if (!mRole.equals("Helper") && !mRole.equals("Seeker")) {
+        if (!mRole.equals(HELPER) && !mRole.equals(SEEKER)) {
             MainActivity.log("INVALID ROLE");
             return;
         }
@@ -38,7 +42,7 @@ class Receiver extends Thread{
 
 
         //Start recording check if received SOS
-        MainActivity.log(String.format("Searching %s.", mRole.equals("Helper") ? "SOS" : "ACK"));
+        MainActivity.log(String.format("Searching %s.", mRole.equals(HELPER) ? SOS : ACK));
 
         while(!mExit) {
             if(isReceived(mRole, threshold)) {
@@ -50,13 +54,13 @@ class Receiver extends Thread{
             return;
         }
 
-        MainActivity.log(String.format("%s received %s.", mRole, mRole.equals("Helper") ? "SOS" : "ACK"));
+        MainActivity.log(String.format("%s received %s.", mRole, mRole.equals(HELPER) ? SOS : ACK));
 
-        if(mRole.equals("Helper")) {
+        if(mRole.equals(HELPER)) {
 
             // Start sender thread to send ACK
             MainActivity.log("Helper sending ACK.");
-            Sender senderThread = new Sender("Helper");
+            Sender senderThread = new Sender(HELPER);
             senderThread.start();
         }
     }

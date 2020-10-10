@@ -1,7 +1,5 @@
 package com.example.uwcapstone;
 
-import android.util.Log;
-
 import com.sonicmeter.android.multisonicmeter.Params;
 import com.sonicmeter.android.multisonicmeter.Utils;
 
@@ -9,64 +7,52 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Sender extends Thread{
-    String role;
-    Map<String, Integer> map;
-    //private short[] signalSequence;
-    private byte[] playSequence;
-    private volatile boolean exit;
-    int number;
 
-    private static Params params = new Params();
+    public static final String HELPER = "Helper";
+    public static final String SEEKER = "Seeker";
+    public static final String ACK = "ACK";
+    public static final String SOS = "SOS";
+    public static final int SOS_SEED = 1500;
+    public static final int ACK_SEED = 2500;
 
-    public Sender(String role) {
-        this.role = role;
-        map = new HashMap<>();
-        map.put("SOS", 1500)   ;
-        map.put("Ack", 2500);
-        number = 0;
-        exit = false;
+    private String mRole;
+    private volatile boolean mExit;
+
+    Sender(String role) {
+        this.mRole = role;
+        mExit = false;
     }
 
     @Override
     public void run() {
 
-        if (role.equals("Seeker")) {
-            // keep sending SOS
-            try {
-                MainActivity.log("seeker is sending message: SOS");
-                playSequence = Utils.convertShortsToBytes( Utils.generateActuateSequence_seed(params.warmSequenceLength, params.signalSequenceLength, params.sampleRate, map.get("SOS"), params.noneSignalLength));
-
-                while(!exit) {
-                    MainActivity.log("start to play sequence " + String.valueOf(number++));
-                    Utils.play(playSequence);
-                    Thread.sleep(500);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (role.equals("Helper")) {
-            // keep sending ACK
-            try {
-                MainActivity.log(" helper is sending message: ACK");
-                playSequence = Utils.convertShortsToBytes( Utils.generateActuateSequence_seed(params.warmSequenceLength, params.signalSequenceLength, params.sampleRate, map.get("ACK"), params.noneSignalLength));
-
-                while(!exit) {
-                    MainActivity.log("start to play sequence " + String.valueOf(number++));
-                    Utils.play(playSequence);
-                    Thread.sleep(500);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        } else {
+        if(!mRole.equals("Seeker") && !mRole.equals("Helper")) {
             MainActivity.log("INVALID ROLE");
+            return;
         }
 
+
+        // keep sending SOS
+        MainActivity.log(String.format("%s sending: %s", mRole, mRole.equals("Helper") ? "ACK" : "SOS"));
+
+        int seed = mRole.equals(HELPER) ? ACK_SEED : SOS_SEED;
+
+        byte[] playSequence = Utils.convertShortsToBytes( Utils.generateActuateSequence_seed(Params.warmSequenceLength, Params.signalSequenceLength, Params.sampleRate, seed, Params.noneSignalLength));
+
+        int number = 0;
+        while(!mExit) {
+            MainActivity.log(String.format("Sending %s %d.", mRole.equals(HELPER) ? ACK : SOS, number++));
+            Utils.play(playSequence);
+            try {
+                sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void stopThread() {
-        exit = true;
+    void stopThread() {
+        mExit = true;
     }
 
 }

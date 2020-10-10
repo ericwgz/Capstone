@@ -80,10 +80,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             public void onClick(View v) {
                 // start to play sequence
                 log("Current Role : Seeker.");
+
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(true);
                 mStartReceiveBtn.setEnabled(false);
                 mStopReceiveBtn.setEnabled(false);
+
                 mClientThread = new Sender("Seeker");
                 mClientThread.start();
             }
@@ -93,11 +95,16 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             public void onClick(View v) {
                 // stop playing sequence
                 log("Stop seeking help.");
+
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
-                mClientThread.stopThread();
+
+                if(mClientThread != null)
+                    mClientThread.stopThread();
+                if(mReceiverThread != null)
+                    mReceiverThread.stopThread();
             }
         });
 
@@ -105,10 +112,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             public void onClick(View v) {
                 // start to listen to sequence
                 log("Current Role : Helper.");
+
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(false);
                 mStopReceiveBtn.setEnabled(true);
+
                 mReceiverThread = new Receiver("Helper");
                 mReceiverThread.start();
             }
@@ -118,11 +127,16 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             public void onClick(View v) {
                 // stop listening to sequence
                 log("Stop help.");
+
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
-                mReceiverThread.stopThread();
+
+                if(mReceiverThread != null)
+                    mClientThread.stopThread();
+                if(mReceiverThread != null)
+                    mReceiverThread.stopThread();
             }
         });
     }
