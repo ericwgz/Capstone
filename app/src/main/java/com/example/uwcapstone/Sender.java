@@ -13,10 +13,12 @@ class Sender extends Thread{
     public static final int ACK_SEED = 2500;
 
     private String mRole;
+    private String mMsg;
     private volatile boolean mExit;
 
     Sender(String role) {
-        this.mRole = role;
+        mRole = role;
+        mMsg = mRole.equals(HELPER) ? SOS : ACK;
         mExit = false;
     }
 
@@ -30,7 +32,7 @@ class Sender extends Thread{
 
 
         // keep sending SOS
-        MainActivity.log(String.format("%s sending: %s", mRole, mRole.equals("Helper") ? "ACK" : "SOS"));
+        MainActivity.log(String.format("%s sending: %s", mRole, mMsg));
 
         int seed = mRole.equals(HELPER) ? ACK_SEED : SOS_SEED;
 
@@ -38,13 +40,8 @@ class Sender extends Thread{
 
         int number = 0;
         while(!mExit) {
-            MainActivity.log(String.format("Sending %s %d.", mRole.equals(HELPER) ? ACK : SOS, number++));
+            MainActivity.log(String.format("Sending %s %d", mMsg, number++));
             Utils.play(playSequence);
-            try {
-                sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
