@@ -1,6 +1,7 @@
 package com.example.uwcapstone;
 
 import android.media.AudioRecord;
+import android.util.Log;
 
 import com.sonicmeter.android.multisonicmeter.TrackRecord;
 import com.sonicmeter.android.multisonicmeter.Utils;
@@ -20,7 +21,8 @@ class Receiver extends Thread{
     private final String mRole;
     private final String mMsg;
     private boolean mExit;
-    private Convolution mConvolution;
+//    private Convolution mConvolution;
+    private short[] mModel;
 
     Receiver(String role) {
         mRole = role;
@@ -30,13 +32,11 @@ class Receiver extends Thread{
         mAudioTrack = new TrackRecord();
         mRecordThread = new RecordThread();
 
-        short[] model;
         if (mRole.equals(HELPER)) {
-            model = DataFile.CDMAsos;
+            mModel = DataFile.CDMAsos;
         } else {
-            model = DataFile.CDMAack;
+            mModel = DataFile.CDMAack;
         }
-        mConvolution = new Convolution(model);
     }
 
     @Override
@@ -53,9 +53,14 @@ class Receiver extends Thread{
 
         double threshold = 20;
 
+        Utils.initConvolution(Params.recordSampleLength * 6);
+        Utils.setFilter_convolution(mModel);
+
         mRecordThread.start();
 
         while (!mExit) {
+            double similarity = receivedAudioSimilarity();
+            MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
             if(receivedAudioSimilarity() > threshold) {
                 break;
             }
@@ -64,6 +69,10 @@ class Receiver extends Thread{
         if (mExit) {
             mRecordThread.stopRecord();
             return;
+        }
+
+        if(mRole.equals(SEEKER)) {
+            MainActivity.mClientThread.stopThread();
         }
 
         MainActivity.log(String.format("%s received %s.", mRole, mMsg));
@@ -132,13 +141,28 @@ class Receiver extends Thread{
 
     private double receivedAudioSimilarity() {
 
+        try {
+            sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (!mRole.equals(HELPER) && !mRole.equals(SEEKER)) {
             return 0;
         }
 
         short[] recordedSequence = getRecordedSequence(Params.recordSampleLength * 6);
 
-        double similarity = mConvolution.estimate_max_similarity(recordedSequence, 0 ,recordedSequence.length);
+
+        if(recordedSequence == null || recordedSequence.length < Params.recordSampleLength * 6) {
+            return 0;
+        }
+
+
+        Log.d(TAG, "recorded Sequence length: " + recordedSequence.length + ", Params recordSampleLength * 6: "+Params.recordSampleLength * 6);
+        // Log.d(TAG, "Convolution mSize mSize * 2: " + Utils.convolution.);
+
+        double similarity = Utils.estimate_max_similarity(recordedSequence, mModel ,0, recordedSequence.length);
 
         return similarity;
     }

@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     String msg = "";
 
-    Sender mClientThread;
-    Receiver mReceiverThread;
+    static Sender mClientThread;
+    static Receiver mReceiverThread;
 
     Button mStartSendBtn;
     Button mStopSendBtn;

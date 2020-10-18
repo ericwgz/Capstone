@@ -1,5 +1,6 @@
 package com.example.uwcapstone;
 
+import com.villoren.java.dsp.convolution.AbstractConvolutionD;
 import com.villoren.java.dsp.convolution.ConvolutionRealD;
 import com.villoren.java.dsp.convolution.FilterKernelD;
 import com.villoren.java.dsp.fft.FourierTransformD;

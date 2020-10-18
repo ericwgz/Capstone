@@ -18,7 +18,7 @@ class Sender extends Thread{
 
     Sender(String role) {
         mRole = role;
-        mMsg = mRole.equals(HELPER) ? SOS : ACK;
+        mMsg = mRole.equals(HELPER) ? ACK : SOS;
         mExit = false;
     }
 
@@ -28,6 +28,12 @@ class Sender extends Thread{
         if(!mRole.equals("Seeker") && !mRole.equals("Helper")) {
             MainActivity.log("INVALID ROLE");
             return;
+        }
+
+        if (mRole.equals(SEEKER)) {
+            // Start receiver thread to search ACK
+            Receiver receiverThread = new Receiver(SEEKER);
+            receiverThread.start();
         }
 
 

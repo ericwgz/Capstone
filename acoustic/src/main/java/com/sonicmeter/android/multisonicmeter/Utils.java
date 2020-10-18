@@ -26,12 +26,13 @@ public class Utils {
 
     private static AudioRecord recorder = null;
     private static AudioTrack player  = null;
-    private static  int mAudioPlayBufferSize = 0;
+    private static int mAudioPlayBufferSize = 0;
 
     private static int lowFreq = 2000;
     private static int highFreq = 6000;
 
-    private static ConvolutionRealD convolution = null;
+    public static ConvolutionRealD convolution = null;
+
 
 
     static boolean audioInitialized()

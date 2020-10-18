@@ -11,15 +11,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d567c6d4-80a8-4898-a7fa-307b700646e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/acoustic/acoustic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/acoustic/acoustic.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/acoustic/src/main/java/com/sonicmeter/android/multisonicmeter/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/acoustic/src/main/java/com/sonicmeter/android/multisonicmeter/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Convolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Convolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Receiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwcapstone/Sender.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_R" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="HT68F0200661" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -43,6 +58,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1dgYYU36w4eWbKSVZY6InFeJ2lD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -52,7 +68,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="8XV7N16116000102" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-01T01:17:37.021Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../version2/uwCapstone" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -66,18 +82,6 @@
       <recent name="C:\Users\User\Desktop\uwCapstone\acoustic\src\main\java\com\villoren\java" />
       <recent name="C:\Users\User\Desktop\uwCapstone\acoustic\src\main\java\com\sonicmeter\android" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Android App.app">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -217,66 +221,34 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="1130" y="610" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1594051058743">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="1130" y="610" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1594051058743" />
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1601745585648">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1601745585648" />
-    <state x="1054" y="504" key="FileChooserDialogImpl" timestamp="1602126386005">
+    <state x="1054" y="504" key="FileChooserDialogImpl" timestamp="1602961714515">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="1054" y="504" key="FileChooserDialogImpl/0.0.2560.1440@0.0.2560.1440" timestamp="1602126386005" />
-    <state width="1250" height="369" key="GridCell.Tab.0.bottom" timestamp="1594079690759">
+    <state x="1054" y="504" key="FileChooserDialogImpl/0.0.2560.1440@0.0.2560.1440" timestamp="1602961714515" />
+    <state width="2516" height="371" key="GridCell.Tab.0.bottom" timestamp="1602986508756">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1250" height="369" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1594079690759" />
-    <state width="1250" height="369" key="GridCell.Tab.0.center" timestamp="1594079690759">
+    <state width="2516" height="371" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1602986508756" />
+    <state width="2516" height="371" key="GridCell.Tab.0.center" timestamp="1602986508756">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1250" height="369" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1594079690759" />
-    <state width="1250" height="369" key="GridCell.Tab.0.left" timestamp="1594079690758">
+    <state width="2516" height="371" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1602986508756" />
+    <state width="2516" height="371" key="GridCell.Tab.0.left" timestamp="1602986508756">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1250" height="369" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1594079690758" />
-    <state width="1250" height="369" key="GridCell.Tab.0.right" timestamp="1594079690759">
+    <state width="2516" height="371" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1602986508756" />
+    <state width="2516" height="371" key="GridCell.Tab.0.right" timestamp="1602986508756">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1250" height="369" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1594079690759" />
-    <state width="2500" height="504" key="GridCell.Tab.1.bottom" timestamp="1594079684923">
+    <state width="2516" height="371" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1602986508756" />
+    <state x="977" y="545" key="com.intellij.ide.util.TipDialog" timestamp="1602961819002">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2500" height="504" key="GridCell.Tab.1.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1594079684923" />
-    <state width="2500" height="504" key="GridCell.Tab.1.center" timestamp="1594079684922">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state width="2500" height="504" key="GridCell.Tab.1.center/0.0.2560.1440@0.0.2560.1440" timestamp="1594079684922" />
-    <state width="2500" height="504" key="GridCell.Tab.1.left" timestamp="1594079684922">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state width="2500" height="504" key="GridCell.Tab.1.left/0.0.2560.1440@0.0.2560.1440" timestamp="1594079684922" />
-    <state width="2500" height="504" key="GridCell.Tab.1.right" timestamp="1594079684922">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state width="2500" height="504" key="GridCell.Tab.1.right/0.0.2560.1440@0.0.2560.1440" timestamp="1594079684922" />
-    <state x="782" y="363" key="SettingsEditor" timestamp="1594051259801">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="782" y="363" key="SettingsEditor/0.0.2560.1440@0.0.2560.1440" timestamp="1594051259801" />
-    <state x="93" y="93" width="2375" height="1255" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1594071194226">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="93" y="93" width="2375" height="1255" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1594071194226" />
-    <state x="977" y="545" key="com.intellij.ide.util.TipDialog" timestamp="1601704926816">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="977" y="545" key="com.intellij.ide.util.TipDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1601704926816" />
-    <state x="937" y="343" key="run.anything.popup" timestamp="1594078329205">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="937" y="343" key="run.anything.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1594078329205" />
+    <state x="977" y="545" key="com.intellij.ide.util.TipDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1602961819002" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
