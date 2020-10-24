@@ -1,17 +1,19 @@
 package com.example.uwcapstone;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.sonicmeter.android.multisonicmeter.Params;
-import com.sonicmeter.android.multisonicmeter.Utils;
-
 public class DataFile {
 
-    public DataFile() {
-    }
+    public static int sampleRate = Integer.parseInt(MainActivity.sampleRateInput);
+    static int frequency = Integer.parseInt(MainActivity.frequencyInput);
+    static double warmDuration = 0.05; // 0.005 Seconds
+    static double signalDuration = 0.05; // Seconds
+    public static int warmSequenceLength = (int)(warmDuration * sampleRate);
+    public static int signalSequenceLength = (int)(sampleRate / frequency + 1);//(signalDuration * sampleRate);
+    static double noneSignalDuration = 0.1; // Seconds
+    public static int noneSignalLength = (int)(noneSignalDuration * sampleRate);
+    public static int bitCount = 63;
+
+    int playSequenceLength = (warmSequenceLength + signalSequenceLength)*2;
+    public static int recordSampleLength = (warmSequenceLength + noneSignalLength + signalSequenceLength * bitCount);
 
     // CDMA code generate using Utils.generateSignalSequence_63(1500)
     public static short[] CDMAsos = {-32767, -23170, 0, 23170, 32767, 23170, 0, -23170, -32767,

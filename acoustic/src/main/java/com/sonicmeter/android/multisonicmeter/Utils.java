@@ -742,7 +742,7 @@ public class Utils {
         int LEN = 0;
         int i = 0;
         int number_of_taps = model.length;
-        while (LEN < number_of_taps){
+        while (LEN < number_of_taps) {
             LEN = (int)Math.pow(2, i);
             i++;
         }

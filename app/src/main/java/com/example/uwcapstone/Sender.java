@@ -1,6 +1,5 @@
 package com.example.uwcapstone;
 
-import com.sonicmeter.android.multisonicmeter.Params;
 import com.sonicmeter.android.multisonicmeter.Utils;
 
 class Sender extends Thread{
@@ -32,8 +31,8 @@ class Sender extends Thread{
 
         if (mRole.equals(SEEKER)) {
             // Start receiver thread to search ACK
-            Receiver receiverThread = new Receiver(SEEKER);
-            receiverThread.start();
+            MainActivity.mReceiverThread = new Receiver(SEEKER);
+            MainActivity.mReceiverThread.start();
         }
 
 
@@ -42,7 +41,7 @@ class Sender extends Thread{
 
         int seed = mRole.equals(HELPER) ? ACK_SEED : SOS_SEED;
 
-        byte[] playSequence = Utils.convertShortsToBytes( Utils.generateActuateSequence_seed(Params.warmSequenceLength, Params.signalSequenceLength, Params.sampleRate, seed, Params.noneSignalLength));
+        byte[] playSequence = Utils.convertShortsToBytes(Utils.generateActuateSequence_seed(DataFile.warmSequenceLength, DataFile.signalSequenceLength, DataFile.sampleRate, seed, DataFile.noneSignalLength));
 
         int number = 0;
         while(!mExit) {
@@ -53,6 +52,7 @@ class Sender extends Thread{
 
     void stopThread() {
         mExit = true;
+        MainActivity.mReceiverThread.stopThread();
     }
 
 }

@@ -1,11 +1,11 @@
 package com.example.uwcapstone;
 
 import android.media.AudioRecord;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.sonicmeter.android.multisonicmeter.TrackRecord;
 import com.sonicmeter.android.multisonicmeter.Utils;
-import com.sonicmeter.android.multisonicmeter.Params;
 
 class Receiver extends Thread{
 
@@ -21,8 +21,8 @@ class Receiver extends Thread{
     private final String mRole;
     private final String mMsg;
     private boolean mExit;
-//    private Convolution mConvolution;
-    private short[] mModel;
+    private short[] idealModel;
+    private short[] contrastModel;
 
     Receiver(String role) {
         mRole = role;
@@ -32,10 +32,12 @@ class Receiver extends Thread{
         mAudioTrack = new TrackRecord();
         mRecordThread = new RecordThread();
 
-        if (mRole.equals(HELPER)) {
-            mModel = DataFile.CDMAsos;
+        if(mRole.equals(HELPER)) {
+            idealModel = DataFile.CDMAsos;
+            contrastModel = DataFile.CDMAack;
         } else {
-            mModel = DataFile.CDMAack;
+            idealModel = DataFile.CDMAack;
+            contrastModel = DataFile.CDMAsos;
         }
     }
 
@@ -51,10 +53,9 @@ class Receiver extends Thread{
         //Start recording check if received SOS
         MainActivity.log(String.format("Searching %s.", mMsg));
 
-        double threshold = 20;
+        double threshold = 50;
 
-        Utils.initConvolution(Params.recordSampleLength * 6);
-        Utils.setFilter_convolution(mModel);
+        Utils.initConvolution(DataFile.CDMAack.length);
 
         mRecordThread.start();
 
@@ -66,16 +67,15 @@ class Receiver extends Thread{
             }
         }
 
-        if (mExit) {
-            mRecordThread.stopRecord();
-            return;
-        }
+        mRecordThread.stopRecord();
 
         if(mRole.equals(SEEKER)) {
             MainActivity.mClientThread.stopThread();
         }
 
-        MainActivity.log(String.format("%s received %s.", mRole, mMsg));
+        if(!mExit) {
+            MainActivity.log(String.format("%s received %s.", mRole, mMsg));
+        }
 
         if (mRole.equals(HELPER)) {
             // Start sender thread to send ACK
@@ -93,8 +93,8 @@ class Receiver extends Thread{
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
             if (Utils.getRecorderHandle() == null)
-                Utils.initRecorder(Params.sampleRate);
-            int minBufferSize = Utils.getMinBufferSize(Params.sampleRate);
+                Utils.initRecorder(DataFile.sampleRate);
+            int minBufferSize = Utils.getMinBufferSize(DataFile.sampleRate);
             if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_UNINITIALIZED) {
                 MainActivity.log("Record Fail, AudioRecord has not been initialized.");
             }
@@ -137,32 +137,34 @@ class Receiver extends Thread{
 
     void stopThread() {
         mExit = true;
+        MainActivity.mClientThread.stopThread();
     }
 
     private double receivedAudioSimilarity() {
-
         try {
             sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         if (!mRole.equals(HELPER) && !mRole.equals(SEEKER)) {
             return 0;
         }
-
-        short[] recordedSequence = getRecordedSequence(Params.recordSampleLength * 6);
-
-
-        if(recordedSequence == null || recordedSequence.length < Params.recordSampleLength * 6) {
+        short[] recordedSequence = getRecordedSequence(DataFile.recordSampleLength * 6);
+        if(recordedSequence == null || recordedSequence.length < DataFile.recordSampleLength * 6) {
             return 0;
         }
 
+        Utils.setFilter_convolution(idealModel);
+        double similarity = Utils.estimate_max_similarity(recordedSequence, idealModel ,0, recordedSequence.length);
 
-        Log.d(TAG, "recorded Sequence length: " + recordedSequence.length + ", Params recordSampleLength * 6: "+Params.recordSampleLength * 6);
-        // Log.d(TAG, "Convolution mSize mSize * 2: " + Utils.convolution.);
 
-        double similarity = Utils.estimate_max_similarity(recordedSequence, mModel ,0, recordedSequence.length);
+        Utils.setFilter_convolution(contrastModel);
+        double contrast = Utils.estimate_max_similarity(recordedSequence, contrastModel ,0, recordedSequence.length);
+
+        Log.d(TAG, String.format("searching for %s, similarity: %f, contrast: %f", mMsg, similarity, contrast));
+        if(contrast > similarity) {
+            return 0;
+        }
 
         return similarity;
     }

@@ -1,6 +1,5 @@
 package com.sonicmeter.android.multisonicmeter;
 
-
 public class Params {
     public static int sampleRate = 48000;
 

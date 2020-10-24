@@ -22,12 +22,17 @@ import com.sonicmeter.android.multisonicmeter.Params;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static MainActivity instance;
-    private Spinner mSpinner;
+    private Spinner frequencySpinner;
+    private Spinner sampleRateSpinner;
+    private Spinner bandWidthSpinner;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     String msg = "";
+    public static String frequencyInput = "6000";
+    public static String sampleRateInput = "48000";
+    public static String bandWidthInput = "1000";
 
     static Sender mClientThread;
     static Receiver mReceiverThread;
@@ -52,29 +57,69 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         mStartReceiveBtn = findViewById(R.id.helper);
         mStopReceiveBtn = findViewById(R.id.stopHelp);
 
-        mSpinner = findViewById(R.id.msgToSend);
+        frequencySpinner = findViewById(R.id.frequency_spinner);
+        frequencySpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
+                // get message in spinner
+                msg = adapter.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                msg = "MESSAGE IS NOT SELECTED";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            }
+        });
+        sampleRateSpinner = findViewById(R.id.sampleRate_spinner);
+        sampleRateSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
+                // get message in spinner
+                msg = adapter.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                msg = "MESSAGE IS NOT SELECTED";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            }
+        });
+        bandWidthSpinner = findViewById(R.id.bandWidth_spinner);
+        bandWidthSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
+                // get message in spinner
+                msg = adapter.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                msg = "MESSAGE IS NOT SELECTED";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            }
+        });
 
         // create a container to hold the values that would integrate to the spinner
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.messages));
+        ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.frequency));
+        ArrayAdapter<String> sampleRateAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sampleRate));
+        ArrayAdapter<String> bandWidthAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bandWidth));
 
         // specify the adapter would have a drop down list
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sampleRateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bandWidthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // list in adapter shown in spinner
-        mSpinner.setAdapter(myAdapter);
-
-        // initial database
-
+        frequencySpinner.setAdapter(frequencyAdapter);
+        sampleRateSpinner.setAdapter(sampleRateAdapter);
+        bandWidthSpinner.setAdapter(bandWidthAdapter);
 
         // initial audiotrack player
         Utils.initPlayer(Params.sampleRate, 0);
         Utils.initRecorder(Params.sampleRate);
 
         Utils.initConvolution((Params.signalSequenceLength * Params.bitCount));
-
-        // register OnItemSelected event
-        mSpinner.setOnItemSelectedListener(this);
 
         mStartSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -141,18 +186,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         });
     }
 
-    // Spinner OnItemSelectedListener
-    @Override
-    public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-        // get message in spinner
-        msg = adapter.getItemAtPosition(position).toString();
-    }
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        msg = "MESSAGE IS NOT SELECTED";
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
     public static void log(final String text)
     {
         instance.runOnUiThread(new Runnable() {
@@ -166,18 +199,18 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         });
     }
 
-    public static void decodedMsg(final String text)
-    {
-        instance.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView decodedMsgBox = instance.findViewById(R.id.decoded_msg);
-                decodedMsgBox.setMovementMethod(ScrollingMovementMethod.getInstance());
-                //Calendar cal = Calendar.getInstance();
-                decodedMsgBox.append("  "+ text + "\n");//cal.get(Calendar.MINUTE)+ ":" +cal.get(Calendar.SECOND)+ ":" + cal.get(Calendar.MILLISECOND) +
-            }
-        });
-    }
+//    public static void decodedMsg(final String text)
+//    {
+//        instance.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                TextView decodedMsgBox = instance.findViewById(R.id.decoded_msg);
+//                decodedMsgBox.setMovementMethod(ScrollingMovementMethod.getInstance());
+//                //Calendar cal = Calendar.getInstance();
+//                decodedMsgBox.append("  "+ text + "\n");//cal.get(Calendar.MINUTE)+ ":" +cal.get(Calendar.SECOND)+ ":" + cal.get(Calendar.MILLISECOND) +
+//            }
+//        });
+//    }
 
     private void checkAndRequestPermissions() {
         int permissionWifi = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE);

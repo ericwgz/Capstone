@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="62dp"
         android:layout_marginRight="62dp"
-        android:layout_marginBottom="40dp"
+        android:enabled="true"
         android:text="SEEKER"
         app:layout_constraintBottom_toTopOf="@+id/helper"
         app:layout_constraintEnd_toStartOf="@+id/stopSeek"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:enabled="true"/>
+        app:layout_constraintVertical_bias="0.525" />
 
     <Button
         android:id="@+id/stopSeek"
@@ -29,16 +29,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="53dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
-        android:layout_marginBottom="40dp"
+        android:enabled="false"
         android:text="STOP SEEK"
         app:layout_constraintBottom_toTopOf="@+id/stopHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/seeker"
         app:layout_constraintTop_toTopOf="parent"
-        android:enabled="false"/>
+        app:layout_constraintVertical_bias="0.604" />
 
     <Button
         android:id="@+id/helper"
@@ -46,16 +45,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="141dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="51dp"
         android:layout_marginRight="51dp"
         android:layout_marginBottom="31dp"
+        android:enabled="true"
         android:text="HELPER"
-        app:layout_constraintBottom_toTopOf="@+id/msgToSend"
+        app:layout_constraintBottom_toTopOf="@+id/frequency_spinner"
         app:layout_constraintEnd_toStartOf="@+id/stopHelp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:enabled="true"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/stopHelp"
@@ -63,48 +62,45 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="141dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
         android:layout_marginBottom="31dp"
+        android:enabled="false"
         android:text="STOP HELP"
-        app:layout_constraintBottom_toTopOf="@+id/msgToSend"
+        app:layout_constraintBottom_toTopOf="@+id/frequency_spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/helper"
-        app:layout_constraintTop_toTopOf="parent"
-        android:enabled="false"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/msgToSend"
-        android:layout_width="409dp"
+        android:id="@+id/frequency_spinner"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/decoded_msg"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helper" />
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.711" />
 
     <TextView
         android:id="@+id/textview_log"
         android:layout_width="373dp"
-        android:layout_height="386dp"
+        android:layout_height="428dp"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="330dp"
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
-        android:layout_marginBottom="15dp"
         android:background="#C6C3C3"
-        android:visibility="visible"
         android:scrollbars="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91"
         tools:visibility="visible" />
 
     <TextView
@@ -113,46 +109,87 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="308dp"
         android:layout_marginEnd="371dp"
         android:layout_marginRight="371dp"
         android:layout_marginBottom="404dp"
         android:text="Log"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.795" />
 
     <TextView
-        android:id="@+id/decoded_msg"
-        android:layout_width="231dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="162dp"
-        android:layout_marginLeft="162dp"
-        android:layout_marginTop="254dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="446dp"
-        android:background="#D5D2D2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/decoded_msg_label"
+        android:id="@+id/f_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="254dp"
-        android:layout_marginEnd="271dp"
-        android:layout_marginRight="271dp"
-        android:layout_marginBottom="458dp"
-        android:text="Decoded message: "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginBottom="14dp"
+        android:text="Frequency"
+        app:layout_constraintBottom_toTopOf="@+id/frequency_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/sampleRate_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/helper" />
+
+    <TextView
+        android:id="@+id/sampleRate_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="14dp"
+        android:text="Sample Rate"
+        app:layout_constraintBottom_toTopOf="@+id/sampleRate_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/bandWidth_label"
+        app:layout_constraintStart_toEndOf="@+id/f_label"
+        app:layout_constraintTop_toBottomOf="@+id/helper" />
+
+    <TextView
+        android:id="@+id/bandWidth_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
+        android:layout_marginBottom="14dp"
+        android:text="Band Wiidth"
+        app:layout_constraintBottom_toTopOf="@+id/bandWidth_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sampleRate_label"
+        app:layout_constraintTop_toBottomOf="@+id/stopHelp" />
+
+    <Spinner
+        android:id="@+id/sampleRate_spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textview_log"
+        app:layout_constraintEnd_toStartOf="@+id/bandWidth_spinner"
+        app:layout_constraintStart_toEndOf="@+id/frequency_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/sampleRate_label" />
+
+    <Spinner
+        android:id="@+id/bandWidth_spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginRight="43dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toTopOf="@+id/textview_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sampleRate_label"
+        app:layout_constraintTop_toBottomOf="@+id/bandWidth_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
