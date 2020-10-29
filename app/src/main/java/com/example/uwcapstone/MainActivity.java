@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
         // initial audiotrack player
         Utils.initPlayer(Params.sampleRate, 0);
-        Utils.initRecorder(Params.sampleRate);
 
         Utils.initConvolution((Params.signalSequenceLength * Params.bitCount));
 
@@ -146,10 +145,9 @@ public class MainActivity extends AppCompatActivity {
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
 
-                if(mClientThread != null)
-                    mClientThread.stopThread();
-                if(mReceiverThread != null)
-                    mReceiverThread.stopThread();
+                mClientThread.stopThread();
+                mClientThread = null;
+                mReceiverThread = null;
             }
         });
 
@@ -178,10 +176,9 @@ public class MainActivity extends AppCompatActivity {
                 mStartReceiveBtn.setEnabled(true);
                 mStopReceiveBtn.setEnabled(false);
 
-                if(mClientThread != null)
-                    mClientThread.stopThread();
-                if(mReceiverThread != null)
-                    mReceiverThread.stopThread();
+                mReceiverThread.stopThread();
+                mClientThread = null;
+                mReceiverThread = null;
             }
         });
     }

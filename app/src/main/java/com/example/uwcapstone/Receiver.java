@@ -53,7 +53,7 @@ class Receiver extends Thread{
         //Start recording check if received SOS
         MainActivity.log(String.format("Searching %s.", mMsg));
 
-        double threshold = 50;
+        double threshold = 10;
 
         Utils.initConvolution(DataFile.CDMAack.length);
 
@@ -62,27 +62,27 @@ class Receiver extends Thread{
         while (!mExit) {
             double similarity = receivedAudioSimilarity();
             MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
-            if(receivedAudioSimilarity() > threshold) {
+            if(similarity > threshold) {
                 break;
             }
         }
 
         mRecordThread.stopRecord();
 
-        if(mRole.equals(SEEKER)) {
-            MainActivity.mClientThread.stopThread();
-        }
-
         if(!mExit) {
             MainActivity.log(String.format("%s received %s.", mRole, mMsg));
-        }
 
-        if (mRole.equals(HELPER)) {
-            // Start sender thread to send ACK
-            MainActivity.log("Helper sending ACK.");
-            Sender senderThread = new Sender(HELPER);
-            senderThread.start();
-        }  
+            if(mRole.equals(SEEKER)) {
+                MainActivity.mClientThread.receivedACK();
+            }
+
+            if (mRole.equals(HELPER)) {
+                // Start sender thread to send ACK
+                MainActivity.log("Helper sending ACK.");
+                MainActivity.mClientThread = new Sender(HELPER);
+                MainActivity.mClientThread.start();
+            }
+        }
     }
 
     private static class RecordThread extends Thread {
@@ -92,8 +92,7 @@ class Receiver extends Thread{
         public void run() {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
-            if (Utils.getRecorderHandle() == null)
-                Utils.initRecorder(DataFile.sampleRate);
+            Utils.initRecorder(DataFile.sampleRate);
             int minBufferSize = Utils.getMinBufferSize(DataFile.sampleRate);
             if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_UNINITIALIZED) {
                 MainActivity.log("Record Fail, AudioRecord has not been initialized.");
@@ -114,7 +113,6 @@ class Receiver extends Thread{
                     break;
                 }
             }
-            stopRecord();
         }
 
         void stopRecord() {
@@ -129,6 +127,22 @@ class Receiver extends Thread{
                 }
             }
         }
+
+        void pauseRecord() {
+            if(Utils.getRecorderHandle() != null) {
+                if (Utils.getRecorderHandle().getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+                    Utils.getRecorderHandle().stop();
+                }
+            }
+        }
+
+        void resumeRecord() {
+            if(Utils.getRecorderHandle() != null) {
+                if (Utils.getRecorderHandle().getRecordingState() == AudioRecord.STATE_INITIALIZED) {
+                    Utils.getRecorderHandle().startRecording();
+                }
+            }
+        }
     }
 
     private synchronized static short[] getRecordedSequence(int length) {
@@ -137,12 +151,14 @@ class Receiver extends Thread{
 
     void stopThread() {
         mExit = true;
-        MainActivity.mClientThread.stopThread();
+        if(mRole.equals(HELPER) && MainActivity.mClientThread != null) {
+            MainActivity.mClientThread.stopThread();
+        }
     }
 
     private double receivedAudioSimilarity() {
         try {
-            sleep(500);
+            sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -167,5 +183,13 @@ class Receiver extends Thread{
         }
 
         return similarity;
+    }
+
+    public void pauseRecord() {
+        mRecordThread.pauseRecord();
+    }
+
+    public void startRecord() {
+        mRecordThread.resumeRecord();
     }
 }

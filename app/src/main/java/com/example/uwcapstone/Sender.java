@@ -2,7 +2,7 @@ package com.example.uwcapstone;
 
 import com.sonicmeter.android.multisonicmeter.Utils;
 
-class Sender extends Thread{
+class Sender extends Thread {
 
     public static final String HELPER = "Helper";
     public static final String SEEKER = "Seeker";
@@ -14,11 +14,14 @@ class Sender extends Thread{
     private String mRole;
     private String mMsg;
     private volatile boolean mExit;
+    private long mStartTime;
+    private long mEndTime;
 
     Sender(String role) {
         mRole = role;
         mMsg = mRole.equals(HELPER) ? ACK : SOS;
         mExit = false;
+        mStartTime = System.currentTimeMillis();
     }
 
     @Override
@@ -46,13 +49,29 @@ class Sender extends Thread{
         int number = 0;
         while(!mExit) {
             MainActivity.log(String.format("Sending %s %d", mMsg, number++));
+            if(mRole.equals(SEEKER) && number >= 10) {
+                number = 0;
+
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             Utils.play(playSequence);
         }
     }
 
     void stopThread() {
         mExit = true;
-        MainActivity.mReceiverThread.stopThread();
+        if(mRole.equals(SEEKER) && MainActivity.mReceiverThread != null) {
+            MainActivity.mReceiverThread.stopThread();
+        }
     }
 
+    public void receivedACK() {
+        mExit = true;
+        mEndTime = System.currentTimeMillis();
+        MainActivity.log(String.format("Total time usage: %f", (mEndTime - mStartTime)/1000));
+    }
 }

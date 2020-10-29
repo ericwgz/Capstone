@@ -263,12 +263,10 @@ public class Utils {
     public static void initRecorder(int sampleRate)
     {
         try {
-            if(recorder == null){
-                int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-                recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minBufferSize);
-                //String curMinBufferSize = String.valueOf(minBufferSize);
-                //Log.d("recorder curMinBufferSize", curMinBufferSize);
-            }
+            int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+            recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minBufferSize);
+            //String curMinBufferSize = String.valueOf(minBufferSize);
+            //Log.d("recorder curMinBufferSize", curMinBufferSize);
         } catch (Throwable x){
             Log.d("Error: ", "initRecorder() Initializing AudioRecord: " + x.getMessage());
         }
