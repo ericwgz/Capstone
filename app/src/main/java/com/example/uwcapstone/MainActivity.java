@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
                 mClientThread.stopThread();
                 mClientThread = null;
-                mReceiverThread = null;
             }
         });
 
@@ -177,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 mStopReceiveBtn.setEnabled(false);
 
                 mReceiverThread.stopThread();
-                mClientThread = null;
                 mReceiverThread = null;
             }
         });

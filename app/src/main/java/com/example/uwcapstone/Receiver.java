@@ -21,6 +21,7 @@ class Receiver extends Thread{
     private final String mRole;
     private final String mMsg;
     private boolean mExit;
+    private boolean mPauseReceive;
     private short[] idealModel;
     private short[] contrastModel;
 
@@ -28,6 +29,7 @@ class Receiver extends Thread{
         mRole = role;
         mMsg = mRole.equals(HELPER) ? SOS : ACK;
         mExit = false;
+        mPauseReceive = mRole.equals(SEEKER);
 
         mAudioTrack = new TrackRecord();
         mRecordThread = new RecordThread();
@@ -56,14 +58,34 @@ class Receiver extends Thread{
         double threshold = 10;
 
         Utils.initConvolution(DataFile.CDMAack.length);
+        Utils.initRecorder(DataFile.sampleRate);
+        if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_UNINITIALIZED) {
+            Log.d(TAG, "Record Fail, AudioRecord has not been initialized.");
+        }
+        try {
+            Utils.getRecorderHandle().startRecording();
+        } catch (Exception e) {
+            Log.d(TAG, "Error recording: " + e.getMessage());
+        }
+        Log.d(TAG, "Start Record Thread, now AudioRecord status is"+Utils.getRecorderHandle().getState());
 
         mRecordThread.start();
 
+        int count = 0;
+
         while (!mExit) {
             double similarity = receivedAudioSimilarity();
+            if (mPauseReceive) {
+                continue;
+            }
             MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
             if(similarity > threshold) {
-                break;
+                count++;
+                if(count >= 3) {
+                    break;
+                }
+            } else {
+                count = 0;
             }
         }
 
@@ -92,23 +114,22 @@ class Receiver extends Thread{
         public void run() {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
-            Utils.initRecorder(DataFile.sampleRate);
             int minBufferSize = Utils.getMinBufferSize(DataFile.sampleRate);
-            if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_UNINITIALIZED) {
-                MainActivity.log("Record Fail, AudioRecord has not been initialized.");
-            }
-            try {
-                Utils.getRecorderHandle().startRecording();
-            } catch (Throwable x) {
-                MainActivity.log("Error recording: " + x.getMessage());
-            }
-            while (bContinue && Utils.getRecorderHandle().getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+
+            while (bContinue) {
+                if(Utils.getRecorderHandle() == null || Utils.getRecorderHandle().getRecordingState() == AudioRecord.STATE_UNINITIALIZED) {
+                    if(Utils.getRecorderHandle() != null) {
+                        Log.d(TAG, "run: AudioRecord status fail, current status:" + Utils.getRecorderHandle().getState());
+                    }
+                    Log.d(TAG, "run: AudioRecord fail.");
+                    continue;
+                }
                 try {
                     short[] buffer = Utils.recordBuffer(minBufferSize);
                     mAudioTrack.addSamples(buffer);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    MainActivity.log("Recording Failed " + e.getMessage());
+                    Log.d(TAG, "Recording Failed " + e.getMessage());
                     stopRecord();
                     break;
                 }
@@ -117,31 +138,11 @@ class Receiver extends Thread{
 
         void stopRecord() {
             bContinue = false;
-            //Stop recording, release AudioRecord instance
-            if (Utils.getRecorderHandle() != null) {
-                if (Utils.getRecorderHandle().getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
-                    Utils.getRecorderHandle().stop();
-                }
-                if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_INITIALIZED) {
-                    Utils.getRecorderHandle().release();
-                }
-            }
-        }
-
-        void pauseRecord() {
+            Utils.releaseAudioRecord();
             if(Utils.getRecorderHandle() != null) {
-                if (Utils.getRecorderHandle().getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
-                    Utils.getRecorderHandle().stop();
-                }
+                Log.d(TAG, "Stop Record Thread Fail, AudioRecord has not been set to null.");
             }
-        }
-
-        void resumeRecord() {
-            if(Utils.getRecorderHandle() != null) {
-                if (Utils.getRecorderHandle().getRecordingState() == AudioRecord.STATE_INITIALIZED) {
-                    Utils.getRecorderHandle().startRecording();
-                }
-            }
+            Log.d(TAG, "Stop Record Thread.");
         }
     }
 
@@ -157,8 +158,11 @@ class Receiver extends Thread{
     }
 
     private double receivedAudioSimilarity() {
+        if (mPauseReceive) {
+            return 0;
+        }
         try {
-            sleep(1000);
+            sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -173,7 +177,6 @@ class Receiver extends Thread{
         Utils.setFilter_convolution(idealModel);
         double similarity = Utils.estimate_max_similarity(recordedSequence, idealModel ,0, recordedSequence.length);
 
-
         Utils.setFilter_convolution(contrastModel);
         double contrast = Utils.estimate_max_similarity(recordedSequence, contrastModel ,0, recordedSequence.length);
 
@@ -185,11 +188,11 @@ class Receiver extends Thread{
         return similarity;
     }
 
-    public void pauseRecord() {
-        mRecordThread.pauseRecord();
+    public void pauseReceive() {
+        mPauseReceive = true;
     }
 
-    public void startRecord() {
-        mRecordThread.resumeRecord();
+    public void resumeReceive() {
+        mPauseReceive = false;
     }
 }

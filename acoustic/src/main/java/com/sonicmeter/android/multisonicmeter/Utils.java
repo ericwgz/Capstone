@@ -31,9 +31,23 @@ public class Utils {
     private static int lowFreq = 2000;
     private static int highFreq = 6000;
 
+    public static final String TAG = Utils.class.getSimpleName();
+
     public static ConvolutionRealD convolution = null;
 
-
+    public static void releaseAudioRecord() {
+        if(recorder == null) {
+            return;
+        }
+        //Stop recording, release AudioRecord instance
+        if (recorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+            Utils.getRecorderHandle().stop();
+        }
+        if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_INITIALIZED) {
+            Utils.getRecorderHandle().release();
+        }
+        recorder = null;
+    }
 
     static boolean audioInitialized()
     {
@@ -357,8 +371,8 @@ public class Utils {
             int numberOfShort = recorder.read(audioData, 0, minBufferSize);
 
 //            recorder.stop();
-        } catch (Throwable x) {
-            MainActivityAcoustic.log("Error reading voice audio: " + x.getMessage());
+        } catch (Exception e) {
+            Log.d(TAG, "Error reading voice audio: " + e.getMessage());
         }
         finally {
         }

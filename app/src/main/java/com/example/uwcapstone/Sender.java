@@ -48,14 +48,23 @@ class Sender extends Thread {
 
         int number = 0;
         while(!mExit) {
-            MainActivity.log(String.format("Sending %s %d", mMsg, number++));
+            if(number == 0) {
+                MainActivity.log(String.format("Sending %s", mMsg));
+            }
+            number++;
             if(mRole.equals(SEEKER) && number >= 10) {
                 number = 0;
 
+                if(MainActivity.mReceiverThread != null) {
+                    MainActivity.mReceiverThread.resumeReceive();
+                }
                 try {
-                    sleep(2000);
+                    sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+                if(MainActivity.mReceiverThread != null) {
+                    MainActivity.mReceiverThread.pauseReceive();
                 }
             }
             Utils.play(playSequence);
@@ -72,6 +81,6 @@ class Sender extends Thread {
     public void receivedACK() {
         mExit = true;
         mEndTime = System.currentTimeMillis();
-        MainActivity.log(String.format("Total time usage: %f", (mEndTime - mStartTime)/1000));
+        MainActivity.log(String.format("Total time usage: %f second.", (mEndTime - mStartTime) * 1.0 / 1000 ));
     }
 }
