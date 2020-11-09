@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         frequencySpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-                // get message in spinner
-                msg = adapter.getItemAtPosition(position).toString();
+                frequencyInput = adapter.getItemAtPosition(position).toString();
+                DataFile.updateFrequency(frequencyInput);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         sampleRateSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-                // get message in spinner
-                msg = adapter.getItemAtPosition(position).toString();
+                sampleRateInput = adapter.getItemAtPosition(position).toString();
+                DataFile.updateSampleRate(sampleRateInput);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {

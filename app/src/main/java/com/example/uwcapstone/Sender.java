@@ -59,7 +59,7 @@ class Sender extends Thread {
                     MainActivity.mReceiverThread.resumeReceive();
                 }
                 try {
-                    sleep(5000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

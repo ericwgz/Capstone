@@ -55,7 +55,7 @@ class Receiver extends Thread{
         //Start recording check if received SOS
         MainActivity.log(String.format("Searching %s.", mMsg));
 
-        double threshold = 10;
+        double threshold = 2;
 
         Utils.initConvolution(DataFile.CDMAack.length);
         Utils.initRecorder(DataFile.sampleRate);
@@ -162,7 +162,7 @@ class Receiver extends Thread{
             return 0;
         }
         try {
-            sleep(500);
+            sleep(600);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -170,9 +170,10 @@ class Receiver extends Thread{
             return 0;
         }
         short[] recordedSequence = getRecordedSequence(DataFile.recordSampleLength * 6);
-        if(recordedSequence == null || recordedSequence.length < DataFile.recordSampleLength * 6) {
-            return 0;
-        }
+//        if(recordedSequence == null || recordedSequence.length < DataFile.recordSampleLength * 6) {
+//            Log.d(TAG, "recordedSequence.length < DataFile.recordSampleLength * 6");
+//            return 0;
+//        }
 
         Utils.setFilter_convolution(idealModel);
         double similarity = Utils.estimate_max_similarity(recordedSequence, idealModel ,0, recordedSequence.length);
