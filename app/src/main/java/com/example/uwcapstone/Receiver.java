@@ -170,9 +170,9 @@ class Receiver extends Thread{
             return 0;
         }
         short[] recordedSequence = getRecordedSequence(DataFile.recordSampleLength * 6);
-        if(recordedSequence == null || recordedSequence.length < DataFile.recordSampleLength * 6) {
-            return 0;
-        }
+//        if(recordedSequence == null || recordedSequence.length < DataFile.recordSampleLength * 6) {
+//            return 0;
+//        }
 
         Utils.setFilter_convolution(idealModel);
         double similarity = Utils.estimate_max_similarity(recordedSequence, idealModel ,0, recordedSequence.length);

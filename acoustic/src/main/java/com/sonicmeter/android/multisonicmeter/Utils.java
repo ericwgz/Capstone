@@ -172,7 +172,7 @@ public class Utils {
         }
         //ChirpSequence
         short[] seq1 = generateSignalSequence_63(seed);
-        for (int i=0;i<seq1.length; i++ )
+        for (int i=0;i<seq1.length && noneSoundlen+ numWarmSample + i < seq.length; i++ )
             seq[noneSoundlen + numWarmSample + i] = seq1[i];
         //Cool sound
 //        double freq1 = highFreq;

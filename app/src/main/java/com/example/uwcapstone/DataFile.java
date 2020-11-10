@@ -145,4 +145,17 @@ public class DataFile {
                        32767, 23170, 0, -23170, -32767, -23170, 0, 23170, 32767,
                        32767, 23170, 0, -23170, -32767, -23170, 0, 23170, 32767};
 
+    public static void updateFrequency(String frequencyStr) {
+        frequency = Integer.parseInt(frequencyStr);
+        signalSequenceLength = (int)(sampleRate / frequency + 1);
+        recordSampleLength = (warmSequenceLength + noneSignalLength + signalSequenceLength * bitCount);
+    }
+
+    public static void updateSampleRate(String sampleRateStr) {
+        sampleRate = Integer.parseInt(sampleRateStr);
+        warmSequenceLength = (int)(warmDuration * sampleRate);
+        signalSequenceLength = (int)(sampleRate / frequency + 1);
+        noneSignalLength = (int)(noneSignalDuration * sampleRate);
+        recordSampleLength = (warmSequenceLength + noneSignalLength + signalSequenceLength * bitCount);
+    }
 }
