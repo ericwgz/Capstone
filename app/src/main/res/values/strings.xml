@@ -6,16 +6,15 @@
     <string name="stop_receiving">STOP RECEIVING...</string>
     <string-array name="frequency">
         <item>6000</item>
-        <item>3000</item>
     </string-array>
 
     <string-array name="sampleRate">
         <item>48000</item>
-        <item>44100</item>
     </string-array>
 
-    <string-array name="bandWidth">
-        <item>1000</item>
-        <item>2000</item>
+    <string-array name="threshold">
+        <item>Quiet</item>
+        <item>Moderate</item>
+        <item>Noisy</item>
     </string-array>
 </resources>

@@ -55,8 +55,6 @@ class Receiver extends Thread{
         //Start recording check if received SOS
         MainActivity.log(String.format("Searching %s.", mMsg));
 
-        double threshold = 10;
-
         Utils.initConvolution(DataFile.CDMAack.length);
         Utils.initRecorder(DataFile.sampleRate);
         if (Utils.getRecorderHandle().getState() == AudioRecord.STATE_UNINITIALIZED) {
@@ -79,7 +77,7 @@ class Receiver extends Thread{
                 continue;
             }
             MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
-            if(similarity > threshold) {
+            if(similarity > DataFile.getThreshold()) {
                 count++;
                 if(count >= 3) {
                     break;

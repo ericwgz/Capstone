@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     private Spinner frequencySpinner;
     private Spinner sampleRateSpinner;
-    private Spinner bandWidthSpinner;
+    private Spinner thresholdSpinner;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     String msg = "";
     public static String frequencyInput = "6000";
@@ -83,12 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
-        bandWidthSpinner = findViewById(R.id.bandWidth_spinner);
-        bandWidthSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+        thresholdSpinner = findViewById(R.id.threshold_spinner);
+        thresholdSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
                 // get message in spinner
                 msg = adapter.getItemAtPosition(position).toString();
+                DataFile.updateThreshold(msg);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -102,18 +103,18 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.frequency));
         ArrayAdapter<String> sampleRateAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sampleRate));
-        ArrayAdapter<String> bandWidthAdapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bandWidth));
+        ArrayAdapter<String> thresholdAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.threshold));
 
         // specify the adapter would have a drop down list
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sampleRateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bandWidthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        thresholdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // list in adapter shown in spinner
         frequencySpinner.setAdapter(frequencyAdapter);
         sampleRateSpinner.setAdapter(sampleRateAdapter);
-        bandWidthSpinner.setAdapter(bandWidthAdapter);
+        thresholdSpinner.setAdapter(thresholdAdapter);
 
         // initial audiotrack player
         Utils.initPlayer(Params.sampleRate, 0);

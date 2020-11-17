@@ -11,6 +11,7 @@ public class DataFile {
     static double noneSignalDuration = 0.1; // Seconds
     public static int noneSignalLength = (int)(noneSignalDuration * sampleRate);
     public static int bitCount = 63;
+    private static double sThreshold = 1.0;
 
     int playSequenceLength = (warmSequenceLength + signalSequenceLength)*2;
     public static int recordSampleLength = (warmSequenceLength + noneSignalLength + signalSequenceLength * bitCount);
@@ -157,5 +158,25 @@ public class DataFile {
         signalSequenceLength = (int)(sampleRate / frequency + 1);
         noneSignalLength = (int)(noneSignalDuration * sampleRate);
         recordSampleLength = (warmSequenceLength + noneSignalLength + signalSequenceLength * bitCount);
+    }
+
+    public static void updateThreshold(String noiseLevel) {
+        switch (noiseLevel) {
+            case "Quiet":
+                sThreshold = 0.1;
+                break;
+            case "Moderate":
+                sThreshold = 0.5;
+                break;
+            case "Noisy":
+                // test battery
+                sThreshold = 100;
+                //sThreshold = 2.0;
+                break;
+        }
+    }
+
+    public static double getThreshold() {
+        return sThreshold;
     }
 }
