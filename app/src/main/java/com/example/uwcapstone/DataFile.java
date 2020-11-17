@@ -170,8 +170,8 @@ public class DataFile {
                 break;
             case "Noisy":
                 // test battery
-                sThreshold = 100;
-                //sThreshold = 2.0;
+                //sThreshold = 100;
+                sThreshold = 2.0;
                 break;
         }
     }
