@@ -163,10 +163,10 @@ public class DataFile {
     public static void updateThreshold(String noiseLevel) {
         switch (noiseLevel) {
             case "Quiet":
-                sThreshold = 0.1;
+                sThreshold = 0.5;
                 break;
             case "Moderate":
-                sThreshold = 0.5;
+                sThreshold = 1.0;
                 break;
             case "Noisy":
                 // test battery

@@ -52,7 +52,7 @@ class Sender extends Thread {
                 MainActivity.log(String.format("Sending %s", mMsg));
             }
             number++;
-            if(mRole.equals(SEEKER) && number >= 10) {
+            if(mRole.equals(SEEKER) && number >= 20) {
                 number = 0;
 
                 if(MainActivity.mReceiverThread != null) {
