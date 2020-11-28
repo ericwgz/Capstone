@@ -25,8 +25,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static MainActivity instance;
-    private Spinner frequencySpinner;
-    private Spinner sampleRateSpinner;
     private Spinner thresholdSpinner;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     String msg = "";
@@ -57,32 +55,6 @@ public class MainActivity extends AppCompatActivity {
         mStartReceiveBtn = findViewById(R.id.helper);
         mStopReceiveBtn = findViewById(R.id.stopHelp);
 
-        frequencySpinner = findViewById(R.id.frequency_spinner);
-        frequencySpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-                frequencyInput = adapter.getItemAtPosition(position).toString();
-                DataFile.updateFrequency(frequencyInput);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                msg = "MESSAGE IS NOT SELECTED";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-            }
-        });
-        sampleRateSpinner = findViewById(R.id.sampleRate_spinner);
-        sampleRateSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-                sampleRateInput = adapter.getItemAtPosition(position).toString();
-                DataFile.updateSampleRate(sampleRateInput);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                msg = "MESSAGE IS NOT SELECTED";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-            }
-        });
         thresholdSpinner = findViewById(R.id.threshold_spinner);
         thresholdSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
@@ -99,21 +71,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // create a container to hold the values that would integrate to the spinner
-        ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.frequency));
-        ArrayAdapter<String> sampleRateAdapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sampleRate));
         ArrayAdapter<String> thresholdAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.threshold));
 
         // specify the adapter would have a drop down list
-        frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sampleRateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         thresholdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // list in adapter shown in spinner
-        frequencySpinner.setAdapter(frequencyAdapter);
-        sampleRateSpinner.setAdapter(sampleRateAdapter);
         thresholdSpinner.setAdapter(thresholdAdapter);
 
         // initial audiotrack player

@@ -67,54 +67,14 @@
         app:layout_constraintGuide_percent="0.3" />
 
     <TextView
-        android:id="@+id/frequency_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Frequency"
-        app:layout_constraintBottom_toTopOf="@id/frequency_spinner"
-        app:layout_constraintEnd_toStartOf="@+id/sampleRate_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
-
-    <TextView
-        android:id="@+id/sampleRate_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sample Rate"
-        app:layout_constraintBottom_toTopOf="@id/sampleRate_spinner"
-        app:layout_constraintEnd_toStartOf="@+id/threshold_label"
-        app:layout_constraintStart_toEndOf="@+id/frequency_label"
-        app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
-
-    <TextView
         android:id="@+id/threshold_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Threshold"
         app:layout_constraintBottom_toTopOf="@id/threshold_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sampleRate_label"
-        app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
-
-    <Spinner
-        android:id="@+id/frequency_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@id/lowerHorizontalGuideline"
-        app:layout_constraintEnd_toStartOf="@+id/sampleRate_spinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frequency_label" />
-
-    <Spinner
-        android:id="@+id/sampleRate_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@id/lowerHorizontalGuideline"
-        app:layout_constraintEnd_toStartOf="@+id/threshold_spinner"
-        app:layout_constraintStart_toEndOf="@+id/frequency_spinner"
-        app:layout_constraintTop_toBottomOf="@id/sampleRate_label" />
+        app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
 
     <Spinner
         android:id="@+id/threshold_spinner"
@@ -123,7 +83,7 @@
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="@id/lowerHorizontalGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sampleRate_spinner"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/threshold_label" />
 
     <TextView
