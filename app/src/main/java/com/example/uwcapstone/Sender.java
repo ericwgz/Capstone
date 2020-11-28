@@ -28,7 +28,7 @@ class Sender extends Thread {
     public void run() {
 
         if(!mRole.equals("Seeker") && !mRole.equals("Helper")) {
-            MainActivity.log("INVALID ROLE");
+//            MainActivity.log("INVALID ROLE");
             return;
         }
 
@@ -40,7 +40,7 @@ class Sender extends Thread {
 
 
         // keep sending SOS
-        MainActivity.log(String.format("%s sending: %s", mRole, mMsg));
+//        MainActivity.log(String.format("%s sending: %s", mRole, mMsg));
 
         int seed = mRole.equals(HELPER) ? ACK_SEED : SOS_SEED;
 
@@ -49,7 +49,7 @@ class Sender extends Thread {
         int number = 0;
         while(!mExit) {
             if(number == 0) {
-                MainActivity.log(String.format("Sending %s", mMsg));
+//                MainActivity.log(String.format("Sending %s", mMsg));
             }
             number++;
             if(mRole.equals(SEEKER) && number >= 20) {
@@ -81,6 +81,6 @@ class Sender extends Thread {
     public void receivedACK() {
         mExit = true;
         mEndTime = System.currentTimeMillis();
-        MainActivity.log(String.format("Total time usage: %f second.", (mEndTime - mStartTime) * 1.0 / 1000 ));
+//        MainActivity.log(String.format("Total time usage: %f second.", (mEndTime - mStartTime) * 1.0 / 1000 ));
     }
 }

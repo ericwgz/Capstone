@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mStartSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to play sequence
-                log("Current Role : Seeker.");
+                // log("Current Role : Seeker.");
 
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(true);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         mStopSendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop playing sequence
-                log("Stop seeking help.");
+                // log("Stop seeking help.");
 
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mStartReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // start to listen to sequence
-                log("Current Role : Helper.");
+                // log("Current Role : Helper.");
 
                 mStartSendBtn.setEnabled(false);
                 mStopSendBtn.setEnabled(false);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         mStopReceiveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // stop listening to sequence
-                log("Stop help.");
+                // log("Stop help.");
 
                 mStartSendBtn.setEnabled(true);
                 mStopSendBtn.setEnabled(false);

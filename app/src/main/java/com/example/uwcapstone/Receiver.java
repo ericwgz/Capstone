@@ -12,7 +12,7 @@ class Receiver extends Thread{
     public static final String HELPER = "Helper";
     public static final String SEEKER = "Seeker";
     public static final String ACK = "ACK";
-    public static final String SOS = "SOS";
+    public static final String SYN = "SYN";
     public static final String TAG = Receiver.class.getSimpleName();
 
     private static TrackRecord mAudioTrack;
@@ -27,7 +27,7 @@ class Receiver extends Thread{
 
     Receiver(String role) {
         mRole = role;
-        mMsg = mRole.equals(HELPER) ? SOS : ACK;
+        mMsg = mRole.equals(HELPER) ? SYN : ACK;
         mExit = false;
         mPauseReceive = mRole.equals(SEEKER);
 
@@ -46,14 +46,14 @@ class Receiver extends Thread{
     @Override
     public void run() {
         if (!mRole.equals(HELPER) && !mRole.equals(SEEKER)) {
-            MainActivity.log("INVALID ROLE");
+            // MainActivity.log("INVALID ROLE");
             return;
         }
 
         Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 
         //Start recording check if received SOS
-        MainActivity.log(String.format("Searching %s.", mMsg));
+        // MainActivity.log(String.format("Searching %s.", mMsg));
 
         Utils.initConvolution(DataFile.CDMAack.length);
         Utils.initRecorder(DataFile.sampleRate);
@@ -76,7 +76,7 @@ class Receiver extends Thread{
             if (mPauseReceive) {
                 continue;
             }
-            MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
+            // MainActivity.log(String.format("%s similarity : %f.", mMsg, similarity));
             if(similarity > DataFile.getThreshold()) {
                 count++;
                 if(count >= 3) {
@@ -90,7 +90,8 @@ class Receiver extends Thread{
         mRecordThread.stopRecord();
 
         if(!mExit) {
-            MainActivity.log(String.format("%s received %s.", mRole, mMsg));
+
+            MainActivity.log(String.format("%s Received.", mMsg));
 
             if(mRole.equals(SEEKER)) {
                 MainActivity.mClientThread.receivedACK();
@@ -98,7 +99,7 @@ class Receiver extends Thread{
 
             if (mRole.equals(HELPER)) {
                 // Start sender thread to send ACK
-                MainActivity.log("Helper sending ACK.");
+                // MainActivity.log("Helper sending ACK.");
                 MainActivity.mClientThread = new Sender(HELPER);
                 MainActivity.mClientThread.start();
             }

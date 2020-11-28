@@ -11,10 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="true"
-        android:text="SEEKER"
-        app:layout_constraintBottom_toTopOf="@+id/helper"
-        app:layout_constraintEnd_toStartOf="@+id/stopSeek"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="Sender"
+        app:layout_constraintBottom_toTopOf="@+id/stopSeek"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,47 +22,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="STOP SEEK"
-        app:layout_constraintBottom_toTopOf="@+id/stopHelp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/seeker"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Stop"
+        app:layout_constraintBottom_toTopOf="@+id/helper"
+        app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seeker" />
 
     <Button
         android:id="@+id/helper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="true"
-        android:text="HELPER"
-        app:layout_constraintBottom_toTopOf="@+id/upperHorizontalGuideline"
-        app:layout_constraintEnd_toStartOf="@+id/stopHelp"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="Receiver"
+        app:layout_constraintBottom_toTopOf="@+id/stopHelp"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seeker" />
+        app:layout_constraintTop_toBottomOf="@+id/stopSeek" />
 
     <Button
         android:id="@+id/stopHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="STOP HELP"
+        android:text="Stop"
         app:layout_constraintBottom_toTopOf="@+id/upperHorizontalGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/helper"
-        app:layout_constraintTop_toBottomOf="@+id/stopSeek" />
+        app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helper" />
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/upperHorizontalGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerHorizontalGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.3" />
 
     <TextView
@@ -71,8 +78,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Threshold"
-        app:layout_constraintBottom_toTopOf="@id/threshold_spinner"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lowerHorizontalGuideline"
+        app:layout_constraintEnd_toStartOf="@id/threshold_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
 
@@ -81,15 +88,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@id/lowerHorizontalGuideline"
+        app:layout_constraintBottom_toTopOf="@id/lowerHorizontalGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/threshold_label" />
+        app:layout_constraintStart_toEndOf="@id/threshold_label"
+        app:layout_constraintTop_toTopOf="@id/upperHorizontalGuideline" />
 
     <TextView
         android:id="@+id/textview_log"
-        android:layout_width="373dp"
-        android:layout_height="428dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
         android:background="#C6C3C3"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,8 +108,18 @@
         android:id="@+id/log_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log"
+        android:text="Result"
         app:layout_constraintBottom_toTopOf="@id/textview_log"
         app:layout_constraintStart_toStartOf="@+id/textview_log"
         app:layout_constraintTop_toBottomOf="@id/lowerHorizontalGuideline" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:srcCompat="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@id/upperHorizontalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf= "@id/verticalGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
