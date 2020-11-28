@@ -57,14 +57,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerHorizontalGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <TextView
         android:id="@+id/frequency_label"
@@ -128,8 +128,8 @@
 
     <TextView
         android:id="@+id/textview_log"
-        android:layout_width="373dp"
-        android:layout_height="428dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#C6C3C3"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,7 +141,7 @@
         android:id="@+id/log_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log"
+        android:text="Result"
         app:layout_constraintBottom_toTopOf="@id/textview_log"
         app:layout_constraintStart_toStartOf="@+id/textview_log"
         app:layout_constraintTop_toBottomOf="@id/lowerHorizontalGuideline" />
